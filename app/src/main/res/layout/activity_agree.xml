@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    >
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@drawable/round"
+
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="使用必读"/>
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:background="@color/black" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:text="本软件仅供学习交流，严禁用于商业用途，请于24小时内删除。"/>
+
+        <Button
+            android:id="@+id/agreeBtn"
+            android:layout_margin="10dp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round"
+            android:backgroundTint="#feeeee"
+            android:text="同意"/>
+    </LinearLayout>
+
+
+</LinearLayout>
