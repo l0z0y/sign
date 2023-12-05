@@ -3,22 +3,33 @@ package com.yy.sign.ui;
 import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.google.gson.Gson;
 import com.yy.sign.HttpService;
 import com.yy.sign.R;
 import com.yy.sign.model.SignRequest;
 import com.yy.sign.model.SignResponse;
 import com.yy.sign.utils.Utils;
 
+import org.json.JSONObject;
+import org.json.JSONStringer;
+
+import java.io.IOException;
 import java.util.Date;
 import java.util.Random;
 
+import okhttp3.FormBody;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -32,6 +43,8 @@ public class MainActivity extends Activity {
     private Button sendBtn;
     private Button pickTimeBtn;
     private TextView dateTv;
+    private TextView resultTv;
+    private LinearLayout resultLayout;
     private String chooseDate;
     private HttpService httpService;
 
@@ -42,6 +55,8 @@ public class MainActivity extends Activity {
         this.sendBtn = (Button) findViewById(R.id.sendBtn);
         this.pickTimeBtn = (Button) findViewById(R.id.pickTimeBtn);
         this.dateTv = (TextView) findViewById(R.id.dateTv);
+        this.resultTv = (TextView) findViewById(R.id.resultTv);
+        this.resultLayout = (LinearLayout) findViewById(R.id.resultLayout);
 
         initRetrofit();
 
@@ -61,8 +76,18 @@ public class MainActivity extends Activity {
 
                     @Override
                     public void onResponse(Call<SignResponse> call, Response<SignResponse> response) {
-                        Log.d("TAG", String.valueOf(response.isSuccessful()));
+                        String res = "";
+                        if (response.body() != null) {
+                            resultLayout.setVisibility(View.VISIBLE);
+                                res =response.body().data?"成功:":"失败:";
+                            resultTv.setText(res+"  "+  new Gson().toJson(response.body()));
+                        }else{
+                            resultLayout.setVisibility(View.VISIBLE);
+                            resultTv.setText("请重试");
+
+                        }
                     }
+
 
                     @Override
                     public void onFailure(Call<SignResponse> call, Throwable t) {
@@ -113,7 +138,7 @@ public class MainActivity extends Activity {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .client(httpClient.build())
-                .baseUrl("http://xzapi.acme.com.cn")
+                .baseUrl("https://xzapi.acme.com.cn")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
