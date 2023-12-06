@@ -79,13 +79,14 @@ public class MainActivity extends Activity {
                         String res = "";
                         if (response.body() != null) {
                             resultLayout.setVisibility(View.VISIBLE);
-                                res =response.body().data?"成功:":"失败:";
-                            resultTv.setText(res+"  "+  new Gson().toJson(response.body()));
-                        }else{
+                            res = response.body().data ? "成功:" : "失败:";
+                            resultTv.setText(res + "  " + new Gson().toJson(response.body()));
+                        } else {
                             resultLayout.setVisibility(View.VISIBLE);
                             resultTv.setText("请重试");
-
                         }
+                        hiddenView();
+
                     }
 
 
@@ -143,6 +144,15 @@ public class MainActivity extends Activity {
                 .build();
 
         this.httpService = retrofit.create(HttpService.class);
+    }
+
+    private void hiddenView() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                resultLayout.setVisibility(View.GONE);
+            }
+        }, 3000);
     }
 
 
