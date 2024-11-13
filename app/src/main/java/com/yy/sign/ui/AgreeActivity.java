@@ -1,6 +1,5 @@
 package com.yy.sign.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
